@@ -8,11 +8,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 // POST /api/admin/subscriptions/[subscriptionId]/cancel - Cancel subscription
-export async function POST({
-  params,
-}: {
-  params: Promise<{ subscriptionId: string }>;
-}) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ subscriptionId: string }> }
+) {
   try {
     const { subscriptionId } = await params;
 
