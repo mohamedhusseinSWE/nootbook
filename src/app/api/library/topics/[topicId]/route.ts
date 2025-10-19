@@ -5,7 +5,7 @@ import { db } from "@/db";
 // DELETE /api/library/topics/[topicId] - Delete a topic and all its notes
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { topicId: string } }
+  { params }: { params: Promise<{ topicId: string }> }
 ) {
   try {
     const sessionUser = await getSession();
@@ -15,7 +15,7 @@ export async function DELETE(
         { status: 401 },
       );
 
-    const { topicId } = params;
+    const { topicId } = await params;
 
     // First, delete all notes in this topic
     await db.libraryNote.deleteMany({
@@ -51,7 +51,7 @@ export async function DELETE(
 // PUT /api/library/topics/[topicId] - Update a topic
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { topicId: string } }
+  { params }: { params: Promise<{ topicId: string }> }
 ) {
   try {
     const sessionUser = await getSession();
@@ -61,7 +61,7 @@ export async function PUT(
         { status: 401 },
       );
 
-    const { topicId } = params;
+    const { topicId } = await params;
     const body = await request.json();
     const { name, description, tags } = body;
 
