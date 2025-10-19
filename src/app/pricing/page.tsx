@@ -1,8 +1,14 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import PricingSection from "@/components/PricingSection";
 import FAQSection, { pricingFAQs } from "@/components/FAQSection";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-const Page = () => {
+const Page = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   return (
     <MaxWidthWrapper className="mb-8 mt-24 text-center max-w-6xl">
       <div className="mx-auto mb-10 sm:max-w-lg">
@@ -13,11 +19,7 @@ const Page = () => {
         </p>
       </div>
 
-      <PricingSection 
-        showTitle={false}
-        showBillingTabs={true}
-        defaultBillingCycle="monthly"
-      />
+      <PricingSection session={session} />
 
       <FAQSection 
         faqs={pricingFAQs} 
