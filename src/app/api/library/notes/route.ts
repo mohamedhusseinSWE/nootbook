@@ -2,8 +2,39 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/getSession";
 import { db } from "@/db";
 
+// Type definitions
+interface LibraryNoteWithTopic {
+  id: string;
+  title: string;
+  content: string;
+  topicId: string;
+  topic: {
+    id: string;
+    name: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+  tags: string[];
+}
+
+interface LibraryTopic {
+  id: string;
+  name: string;
+  userId: string;
+}
+
+interface LibraryNote {
+  id: string;
+  title: string;
+  content: string;
+  topicId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  tags: string[];
+}
+
 // GET /api/library/notes - Get all notes for the user
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const sessionUser = await getSession();
     if (!sessionUser)
@@ -12,7 +43,7 @@ export async function GET(request: NextRequest) {
         { status: 401 },
       );
 
-    const notes = await (db as any).libraryNote.findMany({
+    const notes = await db.libraryNote.findMany({
       where: {
         topic: {
           userId: sessionUser.user.id,
@@ -31,7 +62,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const notesWithTopic = notes.map((note: any) => ({
+    const notesWithTopic = notes.map((note: LibraryNoteWithTopic) => ({
       id: note.id,
       title: note.title,
       content: note.content,
@@ -83,7 +114,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify the topic belongs to the user
-    const topic = await (db as any).libraryTopic.findFirst({
+    const topic = await db.libraryTopic.findFirst({
       where: {
         id: topicId,
         userId: sessionUser.user.id,
@@ -97,7 +128,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const note = await (db as any).libraryNote.create({
+    const note = await db.libraryNote.create({
       data: {
         title: title.trim(),
         content: content?.trim() || "",

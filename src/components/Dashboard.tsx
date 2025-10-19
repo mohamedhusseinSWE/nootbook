@@ -38,7 +38,6 @@ import { trpc } from "@/app/_trpc/client";
 import BillingModal from "./BillingModal";
 import { toast } from "sonner";
 
-type Session = typeof auth.$Infer.Session;
 
 interface UserData {
   id: string;
@@ -69,13 +68,6 @@ interface Plan {
   priceId: string | null;
 }
 
-interface FileData {
-  id: string;
-  name: string;
-  createdAt: string;
-  url: string;
-  userId: string;
-}
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -99,7 +91,7 @@ const Dashboard = () => {
   const [subLoading, setSubLoading] = useState(true);
   const [showBillingModal, setShowBillingModal] = useState(false);
   const [plans, setPlans] = useState<Plan[]>([]);
-  const [loadingPlans, setLoadingPlans] = useState(false);
+  const [, setLoadingPlans] = useState(false);
   const router = useRouter();
 
   // Authentication check
@@ -332,7 +324,7 @@ const Dashboard = () => {
       fetchPlans();
       fetchUserData();
     }
-  }, [session, sessionLoading]);
+  }, [session, sessionLoading,fetchPlans, fetchUserData]);
 
   // Show plans modal when dashboard loads (only for free plan users)
   useEffect(() => {

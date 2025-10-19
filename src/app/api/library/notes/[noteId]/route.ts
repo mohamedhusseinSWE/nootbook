@@ -17,7 +17,7 @@ export async function DELETE(
 
     const { noteId } = params;
 
-    await (db as any).libraryNote.delete({
+    await db.libraryNote.delete({
       where: {
         id: noteId,
         topic: {
@@ -63,7 +63,7 @@ export async function PUT(
       );
     }
 
-    const note = await (db as any).libraryNote.update({
+    const note = await db.libraryNote.update({
       where: {
         id: noteId,
         topic: {

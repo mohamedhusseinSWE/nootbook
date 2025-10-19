@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from 'react';
-import Script from 'next/script';
+import { useEffect } from "react";
+import Script from "next/script";
 
 interface SEOHeadProps {
   title?: string;
@@ -16,6 +16,18 @@ interface SEOHeadProps {
   }>;
 }
 
+declare global {
+  interface Window {
+    gtag?: GtagFunction;
+  }
+}
+
+interface GtagFunction {
+  (...args: unknown[]): void;
+  q?: unknown[];
+}
+
+
 export default function SEOHead({
   title = "NotebookLama – Chat with Your PDFs Instantly",
   description = "NotebookLama is an AI-powered tool that lets you upload and chat with PDF documents. Ask questions, get instant answers, and explore files smarter than ever.",
@@ -23,69 +35,72 @@ export default function SEOHead({
   url = "https://app.notebooklama.com",
   type = "website",
   siteName = "NotebookLama",
-  faqs = []
+  faqs = [],
 }: SEOHeadProps) {
-  // Google Analytics
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   useEffect(() => {
-    // Google Analytics initialization
-    if (GA_MEASUREMENT_ID && typeof window !== 'undefined') {
-      // @ts-ignore
-      window.gtag = window.gtag || function() {
-        // @ts-ignore
-        (window.gtag.q = window.gtag.q || []).push(arguments);
-      };
-      // @ts-ignore
-      window.gtag('js', new Date());
-      // @ts-ignore
-      window.gtag('config', GA_MEASUREMENT_ID);
+    if (GA_MEASUREMENT_ID && typeof window !== "undefined") {
+      if (!window.gtag) {
+        const gtagFn: GtagFunction = function (...args: unknown[]) {
+          gtagFn.q = gtagFn.q || [];
+          gtagFn.q.push(args);
+        };
+        window.gtag = gtagFn;
+      }
+  
+      window.gtag("js", new Date());
+      window.gtag("config", GA_MEASUREMENT_ID);
     }
   }, [GA_MEASUREMENT_ID]);
-
+  
+  
   // Generate FAQ schema
-  const faqSchema = faqs.length > 0 ? {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  } : null;
+  const faqSchema =
+    faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
 
   // Website schema
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": siteName,
-    "url": url,
-    "description": description,
-    "potentialAction": {
+    name: siteName,
+    url: url,
+    description: description,
+    potentialAction: {
       "@type": "SearchAction",
-      "target": {
+      target: {
         "@type": "EntryPoint",
-        "urlTemplate": `${url}/search?q={search_term_string}`
+        urlTemplate: `${url}/search?q={search_term_string}`,
       },
-      "query-input": "required name=search_term_string"
-    }
+      "query-input": "required name=search_term_string",
+    },
   };
 
   // Organization schema
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": siteName,
-    "url": url,
-    "logo": `${url}/logo.png`,
-    "description": description,
-    "sameAs": [
+    name: siteName,
+    url: url,
+    logo: `${url}/logo.png`,
+    description: description,
+    sameAs: [
       "https://twitter.com/notebooklama",
-      "https://github.com/notebooklama"
-    ]
+      "https://github.com/notebooklama",
+    ],
   };
 
   return (
@@ -112,10 +127,16 @@ export default function SEOHead({
       )}
 
       {/* Google Search Console Verification */}
-      <meta name="google-site-verification" content="your-google-search-console-verification-code" />
-      
+      <meta
+        name="google-site-verification"
+        content="your-google-search-console-verification-code"
+      />
+
       {/* Bing Webmaster Verification */}
-      <meta name="msvalidate.01" content="your-bing-webmaster-verification-code" />
+      <meta
+        name="msvalidate.01"
+        content="your-bing-webmaster-verification-code"
+      />
 
       {/* OpenGraph Meta Tags */}
       <meta property="og:type" content={type} />
@@ -150,26 +171,18 @@ export default function SEOHead({
       <Script
         id="website-schema"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteSchema)
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
-
       <Script
         id="organization-schema"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema)
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
-
       {faqSchema && (
         <Script
           id="faq-schema"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqSchema)
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
     </>

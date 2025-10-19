@@ -10,7 +10,7 @@ interface UpgradeButtonProps {
   priceId?: string | null;
 }
 
-const UpgradeButton = ({ planId, priceId }: UpgradeButtonProps) => {
+const UpgradeButton = ({ planId }: UpgradeButtonProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleUpgrade = async () => {

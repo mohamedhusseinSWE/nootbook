@@ -26,6 +26,7 @@ interface AudioPlayerProps {
 
 export default function AudioPlayer({
   audioUrl,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   title: _title, // Prefix with underscore to indicate intentionally unused
   onTimeUpdate,
   onPlay,
@@ -84,7 +85,7 @@ export default function AudioPlayer({
       onEnded?.();
     };
 
-    const handleError = (_e: Event) => {
+    const handleError = () => {
       console.log("🎵 AudioPlayer: Audio error occurred");
       const audio = audioRef.current;
 
@@ -101,7 +102,7 @@ export default function AudioPlayer({
 
       setIsLoading(false);
       setError(
-        `Audio file not found. Please try refreshing the page or contact support if the issue persists.`,
+        `Audio file not found. Please try refreshing the page or contact support if the issue persists.`
       );
       onError?.();
     };
@@ -153,7 +154,7 @@ export default function AudioPlayer({
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch((_err) => {
+      audio.play().catch((_) => {
         // Silent error handling - no console.error calls
         setError("Failed to play audio. Please try again.");
       });

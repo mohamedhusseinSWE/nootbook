@@ -18,7 +18,7 @@ interface TranscriptPageWithSidebarProps {
 export default function TranscriptPageWithSidebar({
   file,
 }: TranscriptPageWithSidebarProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, ] = useState(true);
   const [activeView, setActiveView] = useState("transcript");
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");

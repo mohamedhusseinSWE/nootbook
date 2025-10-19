@@ -80,8 +80,8 @@ const EssayWriter = () => {
   const [generatedEssay, setGeneratedEssay] = useState<string>("");
   const [usage, setUsage] = useState<UsageData | null>(null);
   const [plan, setPlan] = useState<Plan | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [fileId, setFileId] = useState<string | null>(null);
+  const [, setLoading] = useState(true);
+  const [fileId, ] = useState<string | null>(null);
   const [isFreeUser, setIsFreeUser] = useState(false);
   const [showBillingModal, setShowBillingModal] = useState(false);
 
@@ -92,7 +92,7 @@ const EssayWriter = () => {
         toast.error("Please log in to use this feature");
         return;
       }
-      const data: any = await response.json();
+      const data: UsageResponse = await response.json();
       if (data.success) {
         setUsage(data.usage);
         setPlan({
@@ -338,8 +338,8 @@ const EssayWriter = () => {
                   <Alert className="w-auto">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>
-                      You've reached your monthly limit. Upgrade your plan for
-                      more usage.
+                    You&apos;ve reached your monthly limit. Upgrade your plan for more usage.
+
                     </AlertDescription>
                   </Alert>
                 )}

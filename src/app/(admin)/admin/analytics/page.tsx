@@ -22,13 +22,9 @@ import {
   Users,
   CreditCard,
   FileText,
-  MessageSquare,
-  HelpCircle,
   Brain,
-  Headphones,
   TrendingUp,
   Activity,
-  Calendar,
   Download,
   AlertTriangle,
 } from "lucide-react";
@@ -119,13 +115,13 @@ const AnalyticsPage = () => {
       topUsers: analytics.topUsers,
     };
 
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
-      type: 'application/json' 
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: "application/json",
     });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `analytics-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `analytics-${new Date().toISOString().split("T")[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -142,7 +138,11 @@ const AnalyticsPage = () => {
     };
 
     return (
-      <Badge className={statusMap[status.toLowerCase()] || "bg-gray-100 text-gray-800"}>
+      <Badge
+        className={
+          statusMap[status.toLowerCase()] || "bg-gray-100 text-gray-800"
+        }
+      >
         {status}
       </Badge>
     );
@@ -174,15 +174,27 @@ const AnalyticsPage = () => {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
-          <p className="text-gray-600 mt-1">Platform insights and user activity monitoring</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Analytics Dashboard
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Platform insights and user activity monitoring
+          </p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={exportAnalytics} variant="outline" className="flex items-center gap-2">
+          <Button
+            onClick={exportAnalytics}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
             <Download className="w-4 h-4" />
             Export Data
           </Button>
-          <Button onClick={fetchAnalytics} variant="outline" className="flex items-center gap-2">
+          <Button
+            onClick={fetchAnalytics}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
             <TrendingUp className="w-4 h-4" />
             Refresh
           </Button>
@@ -206,11 +218,15 @@ const AnalyticsPage = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Subscriptions</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Active Subscriptions
+            </CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.subscriptions.active}</div>
+            <div className="text-2xl font-bold">
+              {analytics.subscriptions.active}
+            </div>
             <p className="text-xs text-muted-foreground">
               {analytics.subscriptions.total} total
             </p>
@@ -219,11 +235,15 @@ const AnalyticsPage = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Files Processed</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Files Processed
+            </CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{analytics.usage.totalFiles}</div>
+            <div className="text-2xl font-bold">
+              {analytics.usage.totalFiles}
+            </div>
             <p className="text-xs text-muted-foreground">
               {analytics.usage.totalMessages} messages
             </p>
@@ -232,12 +252,16 @@ const AnalyticsPage = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">AI Features Used</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              AI Features Used
+            </CardTitle>
             <Brain className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {analytics.usage.totalQuizzes + analytics.usage.totalFlashcards + analytics.usage.totalPodcasts}
+              {analytics.usage.totalQuizzes +
+                analytics.usage.totalFlashcards +
+                analytics.usage.totalPodcasts}
             </div>
             <p className="text-xs text-muted-foreground">
               Quizzes, flashcards, podcasts
@@ -251,7 +275,9 @@ const AnalyticsPage = () => {
         <Card>
           <CardHeader>
             <CardTitle>User Status Distribution</CardTitle>
-            <CardDescription>Breakdown of user subscription statuses</CardDescription>
+            <CardDescription>
+              Breakdown of user subscription statuses
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -283,7 +309,9 @@ const AnalyticsPage = () => {
         <Card>
           <CardHeader>
             <CardTitle>Plan Distribution</CardTitle>
-            <CardDescription>Active subscription plan breakdown</CardDescription>
+            <CardDescription>
+              Active subscription plan breakdown
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -324,7 +352,9 @@ const AnalyticsPage = () => {
                       <div className="text-sm text-gray-500">{user.email}</div>
                     </div>
                   </TableCell>
-                  <TableCell>{getStatusBadge(user.subscriptionStatus)}</TableCell>
+                  <TableCell>
+                    {getStatusBadge(user.subscriptionStatus)}
+                  </TableCell>
                   <TableCell>{user._count.File}</TableCell>
                   <TableCell>{user._count.Message}</TableCell>
                   <TableCell>{user._count.activities}</TableCell>
@@ -339,22 +369,30 @@ const AnalyticsPage = () => {
       <Card>
         <CardHeader>
           <CardTitle>Recent User Activity</CardTitle>
-          <CardDescription>Latest user actions for chargeback protection</CardDescription>
+          <CardDescription>
+            Latest user actions for chargeback protection
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {analytics.recentActivities.slice(0, 20).map((activity) => (
-              <div key={activity.id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+              <div
+                key={activity.id}
+                className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg"
+              >
                 <Activity className="w-4 h-4 text-gray-500" />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{activity.user.name}</span>
-                    <span className="text-sm text-gray-500">({activity.user.email})</span>
+                    <span className="text-sm text-gray-500">
+                      ({activity.user.email})
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600">{activity.activity}</p>
                   {activity.metadata && (
                     <p className="text-xs text-gray-500 mt-1">
-                      {JSON.parse(activity.metadata).reason || activity.metadata}
+                      {JSON.parse(activity.metadata).reason ||
+                        activity.metadata}
                     </p>
                   )}
                 </div>

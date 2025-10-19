@@ -5,7 +5,26 @@ import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 /**
  * Enhanced audio upload function for podcast generation
+ * 
+ 
+
  */
+
+export type Speaker = {
+  name: string;
+  role?: string;      // e.g., 'host', 'guest'
+  voice_id: string; // required to match DialogueSpeaker
+  // optional voice identifier for TTS
+};
+
+// Define voice settings type
+export type VoiceSettings = {
+  pitch?: number;     // -20 to 20
+  speed?: number;     // 0.5 to 2
+  volume?: number;    // -10 to 10
+  style?: string;     // e.g., 'narrative', 'casual'
+};
+
 export async function uploadPodcastAudio(
   content: string,
   podcastId: string,
@@ -13,8 +32,8 @@ export async function uploadPodcastAudio(
   options: {
     deleteOldAudio?: string; // URL of old audio to delete
     useStreaming?: boolean;
-    speakers?: any[];
-    voiceSettings?: any;
+    speakers?: Speaker[];
+    voiceSettings?: VoiceSettings;
   } = {}
 ): Promise<{
   audioUrl: string;

@@ -1,10 +1,24 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, Star, ArrowRight, BookOpen, Brain, Zap } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Star,
+  ArrowRight,
+  BookOpen,
+  Brain,
+  Zap,
+} from "lucide-react";
 import Link from "next/link";
 import FAQSection from "@/components/FAQSection";
 
@@ -12,40 +26,48 @@ const TurboLearnAlternative = () => {
   const turbolearnFAQs = [
     {
       question: "How is NotebookLama different from TurboLearn?",
-      answer: "NotebookLama offers AI-powered conversations with your documents, multi-format support (PDF, DOC, DOCX, MD, TXT), and real-time chat interface. Unlike TurboLearn, we provide unlimited document storage and advanced AI models for better document analysis."
+      answer:
+        "NotebookLama offers AI-powered conversations with your documents, multi-format support (PDF, DOC, DOCX, MD, TXT), and real-time chat interface. Unlike TurboLearn, we provide unlimited document storage and advanced AI models for better document analysis.",
     },
     {
       question: "Can I migrate my data from TurboLearn?",
-      answer: "Yes, you can easily export your documents from TurboLearn and upload them to NotebookLama. Our AI will analyze them and you can start chatting with your documents immediately."
+      answer:
+        "Yes, you can easily export your documents from TurboLearn and upload them to NotebookLama. Our AI will analyze them and you can start chatting with your documents immediately.",
     },
     {
       question: "Is NotebookLama more expensive than TurboLearn?",
-      answer: "NotebookLama offers better value with our Pro plan at $9.99/month compared to TurboLearn's pricing. We provide more features, better AI capabilities, and unlimited document storage in our higher-tier plans."
+      answer:
+        "NotebookLama offers better value with our Pro plan at $9.99/month compared to TurboLearn's pricing. We provide more features, better AI capabilities, and unlimited document storage in our higher-tier plans.",
     },
     {
       question: "Does NotebookLama have the same features as TurboLearn?",
-      answer: "NotebookLama has all the core features of TurboLearn plus additional capabilities like multi-format support, real-time collaboration, and advanced AI conversations. We offer a superior user experience with better performance."
+      answer:
+        "NotebookLama has all the core features of TurboLearn plus additional capabilities like multi-format support, real-time collaboration, and advanced AI conversations. We offer a superior user experience with better performance.",
     },
     {
       question: "How do I get started with NotebookLama?",
-      answer: "Simply sign up for a free account, upload your documents, and start chatting with them using our AI. You can try all features with our free plan before upgrading to a paid subscription."
-    }
+      answer:
+        "Simply sign up for a free account, upload your documents, and start chatting with them using our AI. You can try all features with our free plan before upgrading to a paid subscription.",
+    },
   ];
 
   const features = [
     {
       title: "AI-Powered PDF Conversations",
-      description: "Chat with your PDFs using advanced AI to get instant answers and insights",
+      description:
+        "Chat with your PDFs using advanced AI to get instant answers and insights",
       icon: <Brain className="w-6 h-6 text-blue-600" />,
     },
     {
       title: "Multi-Format Support",
-      description: "Upload PDFs, DOC, DOCX, MD, and TXT files for comprehensive document analysis",
+      description:
+        "Upload PDFs, DOC, DOCX, MD, and TXT files for comprehensive document analysis",
       icon: <BookOpen className="w-6 h-6 text-green-600" />,
     },
     {
       title: "Lightning Fast Processing",
-      description: "Get instant responses and summaries with our optimized AI engine",
+      description:
+        "Get instant responses and summaries with our optimized AI engine",
       icon: <Zap className="w-6 h-6 text-yellow-600" />,
     },
   ];
@@ -96,20 +118,28 @@ const TurboLearnAlternative = () => {
               NotebookLama: The Ultimate TurboLearn Alternative
             </h1>
             <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-              Transform your document workflow with AI-powered conversations. 
-              Get instant answers, summaries, and insights from your PDFs and documents.
+              Transform your document workflow with AI-powered conversations.
+              Get instant answers, summaries, and insights from your PDFs and
+              documents.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+              <Button
+                asChild
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-gray-100"
+              >
                 <Link href="/dashboard">
                   Start Free Trial
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                <Link href="/pricing">
-                  View Pricing
-                </Link>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-white text-white hover:bg-white/10"
+              >
+                <Link href="/pricing">View Pricing</Link>
               </Button>
             </div>
           </div>
@@ -123,17 +153,19 @@ const TurboLearnAlternative = () => {
             Why Choose NotebookLama Over TurboLearn?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience the next generation of document AI with features that TurboLearn simply can't match
+            Experience the next generation of document AI with features that
+            TurboLearn simply can&apos;t match
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+            <Card
+              key={index}
+              className="text-center hover:shadow-lg transition-shadow"
+            >
               <CardHeader>
-                <div className="flex justify-center mb-4">
-                  {feature.icon}
-                </div>
+                <div className="flex justify-center mb-4">{feature.icon}</div>
                 <CardTitle className="text-xl">{feature.title}</CardTitle>
               </CardHeader>
               <CardContent>
@@ -177,7 +209,10 @@ const TurboLearnAlternative = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {comparison.map((item, index) => (
-                      <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <tr
+                        key={index}
+                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                      >
                         <td className="px-6 py-4 text-sm font-medium text-gray-900">
                           {item.feature}
                         </td>
@@ -188,6 +223,8 @@ const TurboLearnAlternative = () => {
                             <XCircle className="w-5 h-5 text-red-600 mx-auto" />
                           )}
                         </td>
+                        /* eslint-disable-next-line react/no-unescaped-entities
+                        */
                         <td className="px-6 py-4 text-center">
                           {item.turbolearn ? (
                             <CheckCircle className="w-5 h-5 text-green-600 mx-auto" />
@@ -212,6 +249,7 @@ const TurboLearnAlternative = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               What Our Users Say
             </h2>
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
             <p className="text-lg text-gray-600">
               Join thousands of satisfied users who made the switch
             </p>
@@ -222,13 +260,18 @@ const TurboLearnAlternative = () => {
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className="w-5 h-5 text-yellow-400 fill-current"
+                    />
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "NotebookLama has completely transformed how I work with documents. 
-                  The AI conversations are incredibly intuitive and helpful."
+                  &quot;NotebookLama has completely transformed how I work with
+                  documents. The AI conversations are incredibly intuitive and
+                  helpful.&quot;
                 </p>
+
                 <div className="font-semibold">Sarah Johnson</div>
                 <div className="text-sm text-gray-500">Research Analyst</div>
               </CardContent>
@@ -238,12 +281,15 @@ const TurboLearnAlternative = () => {
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className="w-5 h-5 text-yellow-400 fill-current"
+                    />
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "Switched from TurboLearn and never looked back. 
-                  The multi-format support and real-time chat are game-changers."
+                  "Switched from TurboLearn and never looked back. The
+                  multi-format support and real-time chat are game-changers."
                 </p>
                 <div className="font-semibold">Michael Chen</div>
                 <div className="text-sm text-gray-500">Student</div>
@@ -254,12 +300,16 @@ const TurboLearnAlternative = () => {
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className="w-5 h-5 text-yellow-400 fill-current"
+                    />
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "The AI-powered conversations make document analysis so much easier. 
-                  Highly recommend for anyone working with PDFs regularly."
+                  "The AI-powered conversations make document analysis so much
+                  easier. Highly recommend for anyone working with PDFs
+                  regularly."
                 </p>
                 <div className="font-semibold">Emily Rodriguez</div>
                 <div className="text-sm text-gray-500">Content Creator</div>
@@ -270,8 +320,8 @@ const TurboLearnAlternative = () => {
       </div>
 
       {/* FAQ Section */}
-      <FAQSection 
-        faqs={turbolearnFAQs} 
+      <FAQSection
+        faqs={turbolearnFAQs}
         title="TurboLearn Alternative FAQs"
         description="Common questions about switching from TurboLearn to NotebookLama"
       />
@@ -279,23 +329,29 @@ const TurboLearnAlternative = () => {
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl font-bold mb-4">
-            Ready to Make the Switch?
-          </h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Make the Switch?</h2>
           <p className="text-xl mb-8 opacity-90">
-            Join thousands of users who chose NotebookLama as their TurboLearn alternative
+            Join thousands of users who chose NotebookLama as their TurboLearn
+            alternative
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+            <Button
+              asChild
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-gray-100"
+            >
               <Link href="/dashboard">
                 Start Free Trial
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-              <Link href="/pricing">
-                View Pricing Plans
-              </Link>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white/10"
+            >
+              <Link href="/pricing">View Pricing Plans</Link>
             </Button>
           </div>
         </div>

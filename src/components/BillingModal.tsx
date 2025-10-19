@@ -12,14 +12,13 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  
   CardHeader,
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Loader2, Crown, Check, Star, Zap } from "lucide-react";
-import { format } from "date-fns";
 import { useState, useEffect } from "react";
 
 export interface Plan {
@@ -51,6 +50,7 @@ export interface UserProfile {
 interface BillingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  subscriptionPlan?: Plan | null; 
 }
 
 const BillingModal = ({
@@ -135,7 +135,6 @@ const BillingModal = ({
   };
 
   const isSubscribed = userProfile?.subscriptionStatus === "active";
-  const currentPlan = plans.find(plan => plan.id === userProfile?.planId);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

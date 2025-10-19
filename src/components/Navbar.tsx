@@ -10,7 +10,6 @@ import Image from "next/image";
 
 import {
   Info,
-  MessageCircle,
   Home,
   DollarSign,
 } from "lucide-react";

@@ -34,7 +34,7 @@ interface QuizPageWithSidebarProps {
 export default function QuizPageWithSidebar({
   file,
 }: QuizPageWithSidebarProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, ] = useState(true);
   const [activeView, setActiveView] = useState("quiz");
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");

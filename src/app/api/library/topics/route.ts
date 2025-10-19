@@ -1,9 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
+
+
+
+import { NextResponse } from "next/server";
 import { getSession } from "@/lib/getSession";
 import { db } from "@/db";
 
-// GET /api/library/topics - Get all topics for the user
-export async function GET(request: NextRequest) {
+// ✅ GET /api/library/topics - Get all topics for the user
+export async function GET() {
   try {
     const sessionUser = await getSession();
     if (!sessionUser)
@@ -12,7 +15,7 @@ export async function GET(request: NextRequest) {
         { status: 401 },
       );
 
-    const topics = await (db as any).libraryTopic.findMany({
+    const topics = await db.libraryTopic.findMany({
       where: {
         userId: sessionUser.user.id,
       },
@@ -28,7 +31,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const topicsWithCount = topics.map((topic: any) => ({
+    const topicsWithCount = topics.map((topic) => ({
       id: topic.id,
       name: topic.name,
       description: topic.description,
@@ -38,9 +41,9 @@ export async function GET(request: NextRequest) {
       tags: topic.tags,
     }));
 
-    return NextResponse.json({ 
-      success: true, 
-      topics: topicsWithCount 
+    return NextResponse.json({
+      success: true,
+      topics: topicsWithCount,
     });
   } catch (error) {
     console.error("Error fetching topics:", error);
@@ -51,8 +54,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/library/topics - Create a new topic
-export async function POST(request: NextRequest) {
+// ✅ POST /api/library/topics - Create a new topic
+export async function POST(request: Request) {
   try {
     const sessionUser = await getSession();
     if (!sessionUser)
@@ -71,7 +74,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const topic = await (db as any).libraryTopic.create({
+    const topic = await db.libraryTopic.create({
       data: {
         name: name.trim(),
         description: description?.trim() || "",

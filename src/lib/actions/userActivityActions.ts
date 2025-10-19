@@ -2,11 +2,12 @@
 
 import { db } from "@/db";
 import { getUserFromRequest } from "@/lib/auth";
+export type UserActivityMetadata = Record<string, string | number | boolean | null>;
 
 export async function logUserActivity(
   userId: string,
   activity: string,
-  metadata?: Record<string, any>
+  metadata?: UserActivityMetadata
 ) {
   try {
     await db.userActivity.create({

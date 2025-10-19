@@ -147,7 +147,7 @@ const QuickNavTabs: React.FC<QuickNavTabsProps> = ({ fileId, currentPage }) => {
               [item.id]: "error",
             }));
           }
-        } catch (error) {
+        } catch (_) {
           setGenerationStatus((prev) => ({
             ...prev,
             [item.id]: "error",

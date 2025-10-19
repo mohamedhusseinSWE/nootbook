@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Home, Settings, Menu, X, FileText, CheckSquare, LogOut, User, ChevronDown, Crown, Library, BookOpen, Check } from "lucide-react";
+import { Home, Settings, Menu, X, FileText, CheckSquare, LogOut, User, ChevronDown, Crown, Library, Check } from "lucide-react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
@@ -57,9 +57,7 @@ const MainSidebar: React.FC<MainSidebarProps> = ({ sidebarOpen, onToggleSidebar 
     router.push("/auth");
   };
 
-  const handleUpgradeToPro = () => {
-    setShowBillingModal(true);
-  };
+  
 
   const handleNavigation = (item: (typeof mainSidebarItems)[0]) => {
     router.push(item.href);

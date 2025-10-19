@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { podcastCleanupService } from '@/lib/podcast-cleanup';
+import { NextRequest, NextResponse } from "next/server";
+import { podcastCleanupService } from "@/lib/podcast-cleanup";
 
 /**
  * API endpoint for podcast cleanup operations
@@ -8,10 +8,10 @@ import { podcastCleanupService } from '@/lib/podcast-cleanup';
  * DELETE /api/podcast/cleanup/{podcastId} - Manual cleanup for specific podcast
  */
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
-    console.log('🧹 Manual podcast cleanup triggered via API');
-    
+    console.log("🧹 Manual podcast cleanup triggered via API");
+
     // Run both cleanup operations
     const [expiredResult, failedResult] = await Promise.all([
       podcastCleanupService.cleanupExpiredAudio(),
@@ -22,11 +22,13 @@ export async function POST(request: NextRequest) {
     const totalErrors = expiredResult.errors + failedResult.errors;
     const totalSizeFreed = expiredResult.totalSize;
 
-    console.log(`🎉 Cleanup completed! Total deleted: ${totalDeleted}, Errors: ${totalErrors}, Size freed: ${totalSizeFreed} bytes`);
+    console.log(
+      `🎉 Cleanup completed! Total deleted: ${totalDeleted}, Errors: ${totalErrors}, Size freed: ${totalSizeFreed} bytes`
+    );
 
     return NextResponse.json({
       success: true,
-      message: 'Cleanup completed successfully',
+      message: "Cleanup completed successfully",
       results: {
         expiredAudio: expiredResult,
         failedPodcasts: failedResult,
@@ -37,38 +39,36 @@ export async function POST(request: NextRequest) {
         },
       },
     });
-
   } catch (error) {
-    console.error('❌ Cleanup API error:', error);
+    console.error("❌ Cleanup API error:", error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Cleanup failed',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: "Cleanup failed",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    console.log('📊 Fetching podcast cleanup statistics');
-    
+    console.log("📊 Fetching podcast cleanup statistics");
+
     const stats = await podcastCleanupService.getCleanupStats();
 
     return NextResponse.json({
       success: true,
       stats,
     });
-
   } catch (error) {
-    console.error('❌ Stats API error:', error);
+    console.error("❌ Stats API error:", error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to fetch stats',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: "Failed to fetch stats",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     );

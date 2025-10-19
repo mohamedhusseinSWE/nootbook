@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { prompt, fileId, context } = body;
+    const { prompt, context } = body;
 
     if (!prompt || !prompt.trim()) {
       return NextResponse.json(

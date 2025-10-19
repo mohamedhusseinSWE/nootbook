@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { essay, criteria, fileId, context } = body;
+    const { essay, criteria, context } = body;
 
     if (!essay || !essay.trim()) {
       return NextResponse.json(

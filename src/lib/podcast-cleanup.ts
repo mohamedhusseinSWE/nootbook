@@ -1,5 +1,4 @@
 import { db } from '@/db';
-import { podcastAudioGenerator } from './elevenlabs-podcast';
 import { deleteAudioFile } from './audio-upload';
 
 /**
@@ -20,7 +19,6 @@ export class PodcastCleanupService {
       console.log('🧹 Starting podcast audio cleanup...');
       
       const now = new Date();
-      const thirtyDaysAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
       
       // Find podcasts that should be auto-deleted
       const expiredPodcasts = await db.podcast.findMany({
@@ -170,7 +168,6 @@ export class PodcastCleanupService {
   }> {
     try {
       const now = new Date();
-      const thirtyDaysAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
       
       const [
         totalPodcasts,

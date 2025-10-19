@@ -37,12 +37,12 @@ async function processDOCX(file: File): Promise<string> {
 
   // Extract text from DOCX
   const result = await mammoth.extractRawText({ buffer });
-  let extractedContent = result.value;
+  const extractedContent = result.value;
 
   // Note: Mammoth.js can extract text from DOCX files with images
   // The images themselves are not extracted as separate entities in the raw text
   // but any text within images (if OCR was applied) would be included in the extracted text
-  
+
   return extractedContent;
 }
 
@@ -58,7 +58,7 @@ async function processDOC(file: File): Promise<string> {
   // Note: Mammoth.js can extract text from DOC files with images
   // The images themselves are not extracted as separate entities in the raw text
   // but any text within images (if OCR was applied) would be included in the extracted text
-  
+
   return extractedContent;
 }
 

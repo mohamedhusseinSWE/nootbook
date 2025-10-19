@@ -53,30 +53,6 @@ const SubscriptionsManagement = () => {
   const [cancelingSubscription, setCancelingSubscription] = useState<number | null>(null);
   const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
-  useEffect(() => {
-    fetchSubscriptions();
-  }, []);
-
-  useEffect(() => {
-    filterSubscriptions();
-  }, [subscriptions, searchTerm, statusFilter]);
-
-  const fetchSubscriptions = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/admin/subscriptions");
-      const data = await response.json();
-
-      if (data.success) {
-        setSubscriptions(data.subscriptions);
-      }
-    } catch (error) {
-      console.error("Error fetching subscriptions:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const filterSubscriptions = useCallback(() => {
     let filtered = subscriptions;
 
@@ -97,15 +73,29 @@ const SubscriptionsManagement = () => {
     setFilteredSubscriptions(filtered);
   }, [subscriptions, searchTerm, statusFilter]);
 
- useEffect(() => {
-  fetchSubscriptions();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+  const fetchSubscriptions = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/admin/subscriptions");
+      const data = await response.json();
 
+      if (data.success) {
+        setSubscriptions(data.subscriptions);
+      }
+    } catch (error) {
+      console.error("Error fetching subscriptions:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     filterSubscriptions();
-  }, [filterSubscriptions]); // ✅
+  }, [filterSubscriptions]);
+
+  useEffect(() => {
+    fetchSubscriptions();
+  }, []);
 
   const getStatusBadge = (status: string) => {
     const statusMap: { [key: string]: string } = {
@@ -387,8 +377,8 @@ const SubscriptionsManagement = () => {
                               Are you sure you want to cancel this subscription? This action will:
                               <ul className="list-disc list-inside mt-2 space-y-1">
                                 <li>Cancel the subscription in Stripe</li>
-                                <li>Update the user's plan to "free"</li>
-                                <li>Set the subscription status to "canceled"</li>
+                                <li>Update the user&apos;s plan to &quot;free&quot;</li>
+                                <li>Set the subscription status to &quot;canceled&quot;</li>
                                 <li>Set the end date to today</li>
                               </ul>
                               <br />

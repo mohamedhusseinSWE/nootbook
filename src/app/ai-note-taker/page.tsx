@@ -10,16 +10,12 @@ import {
   ArrowRight, 
   BookOpen, 
   Brain, 
-  Zap, 
   MessageSquare, 
   FileText, 
   Users, 
   Mic,
   Search,
-  Share2,
-  Download,
-  Clock,
-  Target
+  Share2
 } from "lucide-react";
 import Link from "next/link";
 import FAQSection from "@/components/FAQSection";
@@ -213,7 +209,7 @@ const AINoteTaker = () => {
               Perfect for Every Note Taking Need
             </h2>
             <p className="text-lg text-gray-600">
-              Whether you're a student, researcher, or professional, our AI note taker has you covered
+              Whether you&apos;re a student, researcher, or professional, our AI note taker has you covered
             </p>
           </div>
 
@@ -307,8 +303,8 @@ const AINoteTaker = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "This AI note taker has revolutionized how I study. 
-                  I can now create comprehensive notes from textbooks in minutes instead of hours."
+                  &quot;This AI note taker has revolutionized how I study. 
+                  I can now create comprehensive notes from textbooks in minutes instead of hours.&quot;
                 </p>
                 <div className="font-semibold">Jessica Martinez</div>
                 <div className="text-sm text-gray-500">Medical Student</div>
@@ -323,8 +319,8 @@ const AINoteTaker = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "As a researcher, I deal with dozens of papers daily. 
-                  This tool helps me extract key insights and create organized notes effortlessly."
+                  &quot;As a researcher, I deal with dozens of papers daily. 
+                  This tool helps me extract key insights and create organized notes effortlessly.&quot;
                 </p>
                 <div className="font-semibold">Dr. Robert Kim</div>
                 <div className="text-sm text-gray-500">Research Scientist</div>
@@ -339,8 +335,8 @@ const AINoteTaker = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "The AI conversations feature is incredible. 
-                  I can ask questions about my notes and get instant, accurate answers."
+                  &quot;The AI conversations feature is incredible. 
+                  I can ask questions about my notes and get instant, accurate answers.&quot;
                 </p>
                 <div className="font-semibold">Amanda Foster</div>
                 <div className="text-sm text-gray-500">Content Creator</div>

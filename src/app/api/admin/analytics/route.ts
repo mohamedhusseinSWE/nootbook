@@ -3,6 +3,26 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
+// Type definitions
+interface SubscriptionWithPlan {
+  id: number;
+  plan: {
+    price: number;
+  };
+}
+
+interface PlanDistribution {
+  planId: number;
+  _count: {
+    planId: number;
+  };
+}
+
+interface Plan {
+  id: number;
+  name: string;
+}
+
 // GET /api/admin/analytics - Get platform analytics
 export async function GET() {
   try {
@@ -40,7 +60,7 @@ export async function GET() {
     });
 
     const totalRevenue = activeSubscriptionsWithPlans.reduce(
-      (sum: number, sub: any) => sum + sub.plan.price,
+      (sum: number, sub: SubscriptionWithPlan) => sum + sub.plan.price,
       0
     );
 
@@ -121,13 +141,13 @@ export async function GET() {
     const planDetails = await prisma.plan.findMany({
       where: {
         id: {
-          in: planDistribution.map((p: any) => p.planId),
+          in: planDistribution.map((p: PlanDistribution) => p.planId),
         },
       },
     });
 
-    const planDistributionWithNames = planDistribution.map((dist: any) => {
-      const plan = planDetails.find((p: any) => p.id === dist.planId);
+    const planDistributionWithNames = planDistribution.map((dist: PlanDistribution) => {
+      const plan = planDetails.find((p: Plan) => p.id === dist.planId);
       return {
         planName: plan?.name || "Unknown",
         count: dist._count.planId,

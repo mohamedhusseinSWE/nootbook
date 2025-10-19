@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { 
-  FileText, 
+import {
+  FileText,
   File,
   Loader2,
   CheckCircle,
@@ -16,7 +16,7 @@ import {
   AlertCircle,
   CheckSquare,
   Upload,
-  Crown
+  Crown,
 } from "lucide-react";
 import { toast } from "sonner";
 import R2UploadButton from "@/components/R2UploadButton";
@@ -44,6 +44,13 @@ interface UsageData {
     unlimited: boolean;
   };
 }
+interface UsageResponse {
+  success: boolean;
+  usage: UsageData;
+  plan: Plan;
+  isFreeUser?: boolean;
+  message?: string;
+}
 
 interface Plan {
   id: number;
@@ -53,32 +60,26 @@ interface Plan {
   isPremium: boolean;
 }
 
-interface UsageResponse {
-  success: boolean;
-  usage: UsageData;
-  plan: Plan;
-  isFreeUser?: boolean;
-  message?: string;
-}
-
 const EssayGrader = () => {
   const [activeTab, setActiveTab] = useState<"text" | "pdf">("text");
   const [essayText, setEssayText] = useState("");
   const [outputLanguage, setOutputLanguage] = useState("English");
   const [isGrading, setIsGrading] = useState(false);
-  const [gradingResult, setGradingResult] = useState<GradingResult | null>(null);
+  const [gradingResult, setGradingResult] = useState<GradingResult | null>(
+    null
+  );
   const [usage, setUsage] = useState<UsageData | null>(null);
   const [plan, setPlan] = useState<Plan | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [fileId, setFileId] = useState<string | null>(null);
   const [isFreeUser, setIsFreeUser] = useState(false);
   const [showBillingModal, setShowBillingModal] = useState(false);
 
   const exampleEssays = [
     "DeepPDF: AI-Powered Deep Learning for PDFs",
-    "Collaborative Uses of GenAI Tools In Project-Based Learning", 
+    "Collaborative Uses of GenAI Tools In Project-Based Learning",
     "Evaluating Solutions to Marine Plastic Pollution",
-    "The Relevance of Financial Development, Natural Resources..."
+    "The Relevance of Financial Development, Natural Resources...",
   ];
 
   const fetchUsage = async () => {
@@ -88,12 +89,12 @@ const EssayGrader = () => {
         toast.error("Please log in to use this feature");
         return;
       }
-      const data: any = await response.json();
+      const data: UsageResponse = await response.json();
       if (data.success) {
         setUsage(data.usage);
         setPlan({
           ...data.plan,
-          isPremium: data.plan ? isPremiumPlan(data.plan.name) : false
+          isPremium: data.plan ? isPremiumPlan(data.plan.name) : false,
         });
         setIsFreeUser(data.isFreeUser || false);
       } else {
@@ -110,7 +111,6 @@ const EssayGrader = () => {
   useEffect(() => {
     fetchUsage();
   }, []);
-
 
   const handleGradeEssay = async () => {
     // Validate input based on active tab
@@ -136,7 +136,10 @@ const EssayGrader = () => {
     }
 
     // Check if user has reached their limit
-    if (!usage.essayGrader.unlimited && usage.essayGrader.used >= usage.essayGrader.limit) {
+    if (
+      !usage.essayGrader.unlimited &&
+      usage.essayGrader.used >= usage.essayGrader.limit
+    ) {
       toast.error("You have reached your essay grader limit for this month");
       return;
     }
@@ -151,7 +154,7 @@ const EssayGrader = () => {
         },
         body: JSON.stringify({
           type: "essay_grader",
-          fileId: fileId
+          fileId: fileId,
         }),
       });
 
@@ -175,7 +178,7 @@ const EssayGrader = () => {
           criteria: "",
           fileId: activeTab === "pdf" ? fileId : null,
           context: activeTab === "pdf" ? `Based on the uploaded PDF file` : "",
-          inputType: activeTab
+          inputType: activeTab,
         }),
       });
 
@@ -210,9 +213,11 @@ const EssayGrader = () => {
               AI Essay Grader - Grade My College Essays Online Free
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              AI Grader is the ultimate tool for grading essays, and assignments. Whether you're a teacher or student, 
-              this AI grader for essays provides accurate feedback in under 3 seconds. Free, online, and with no 
-              sign-up required, try our AI Grader today for quick, reliable results.
+              AI Grader is the ultimate tool for grading essays, and
+              assignments. Whether you&apos;re a teacher or student, this AI
+              grader for essays provides accurate feedback in under 3 seconds.
+              Free, online, and with no sign-up required, try our AI Grader
+              today for quick, reliable results.
             </p>
           </div>
 
@@ -229,7 +234,10 @@ const EssayGrader = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600">
-                      Essay Grader: {usage.essayGrader.used} / {usage.essayGrader.unlimited ? "∞" : usage.essayGrader.limit}
+                      Essay Grader: {usage.essayGrader.used} /{" "}
+                      {usage.essayGrader.unlimited
+                        ? "∞"
+                        : usage.essayGrader.limit}
                     </p>
                     {plan && (
                       <p className="text-xs text-gray-500">Plan: {plan.name}</p>
@@ -242,13 +250,17 @@ const EssayGrader = () => {
                         Free plan - Upgrade to use AI Essay Grader
                       </AlertDescription>
                     </Alert>
-                  ) : !usage.essayGrader.unlimited && usage.essayGrader.used >= usage.essayGrader.limit && (
-                    <Alert className="w-auto">
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>
-                        You've reached your monthly limit. Upgrade your plan for more usage.
-                      </AlertDescription>
-                    </Alert>
+                  ) : (
+                    !usage.essayGrader.unlimited &&
+                    usage.essayGrader.used >= usage.essayGrader.limit && (
+                      <Alert className="w-auto">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          You&apos;ve reached your monthly limit. Upgrade your
+                          plan for more usage.
+                        </AlertDescription>
+                      </Alert>
+                    )
                   )}
                 </div>
               </CardContent>
@@ -279,7 +291,13 @@ const EssayGrader = () => {
                     Upload images and PDFs to enhance your AI-generated content
                   </p>
                   <R2UploadButton
-                    disabled={!!(usage && !usage.essayGrader.unlimited && usage.essayGrader.used >= usage.essayGrader.limit)}
+                    disabled={
+                      !!(
+                        usage &&
+                        !usage.essayGrader.unlimited &&
+                        usage.essayGrader.used >= usage.essayGrader.limit
+                      )
+                    }
                   />
                 </div>
               ) : (
@@ -293,7 +311,7 @@ const EssayGrader = () => {
                   <p className="text-sm text-gray-600 mb-3">
                     Upload images and PDFs to enhance your AI-generated content
                   </p>
-                  <Button 
+                  <Button
                     onClick={() => setShowBillingModal(true)}
                     className="w-full gap-2"
                     size="sm"
@@ -360,7 +378,7 @@ const EssayGrader = () => {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div className="w-48">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Output Language
@@ -389,13 +407,15 @@ const EssayGrader = () => {
                       </p>
                       <R2UploadButton
                         disabled={
-                          !!(usage &&
-                          !usage.essayGrader.unlimited &&
-                          usage.essayGrader.used >= usage.essayGrader.limit)
+                          !!(
+                            usage &&
+                            !usage.essayGrader.unlimited &&
+                            usage.essayGrader.used >= usage.essayGrader.limit
+                          )
                         }
                       />
                     </div>
-                    
+
                     <div className="w-48">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Output Language
@@ -417,9 +437,13 @@ const EssayGrader = () => {
                 <Button
                   onClick={handleGradeEssay}
                   disabled={
-                    isGrading || 
-                    isFreeUser || 
-                    !!(usage && !usage.essayGrader.unlimited && usage.essayGrader.used >= usage.essayGrader.limit) ||
+                    isGrading ||
+                    isFreeUser ||
+                    !!(
+                      usage &&
+                      !usage.essayGrader.unlimited &&
+                      usage.essayGrader.used >= usage.essayGrader.limit
+                    ) ||
                     (activeTab === "text" && essayText.length < 500) ||
                     (activeTab === "pdf" && !fileId)
                   }
@@ -441,16 +465,22 @@ const EssayGrader = () => {
                   <Alert className="mt-4">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>
-                      You need to upgrade your plan to use the AI Essay Grader feature.
+                      You need to upgrade your plan to use the AI Essay Grader
+                      feature.
                     </AlertDescription>
                   </Alert>
-                ) : usage && !usage.essayGrader.unlimited && usage.essayGrader.used >= usage.essayGrader.limit && (
-                  <Alert className="mt-4">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      You have reached your essay grader limit for this month. Please upgrade your plan to continue.
-                    </AlertDescription>
-                  </Alert>
+                ) : (
+                  usage &&
+                  !usage.essayGrader.unlimited &&
+                  usage.essayGrader.used >= usage.essayGrader.limit && (
+                    <Alert className="mt-4">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>
+                        You have reached your essay grader limit for this month.
+                        Please upgrade your plan to continue.
+                      </AlertDescription>
+                    </Alert>
+                  )
                 )}
               </div>
             </CardContent>
@@ -458,7 +488,9 @@ const EssayGrader = () => {
 
           {/* Example Essays */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Example Essays</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Example Essays
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {exampleEssays.map((example, index) => (
                 <Card
@@ -498,10 +530,12 @@ const EssayGrader = () => {
                 AI Grader for Effortless Grading
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Without AI Grader, grading assignments can be time-consuming and prone to errors. 
-                The AI Grader streamlines the grading process, offering accurate, quick feedback for 
-                essays, assignment, and tests. Whether you're a teacher or a student, an AI Grader 
-                for essays and assignment helps reduce workload and ensures fair grading every time.
+                Without AI Grader, grading assignments can be time-consuming and
+                prone to errors. The AI Grader streamlines the grading process,
+                offering accurate, quick feedback for essays, assignment, and
+                tests. Whether you&apos;re a teacher or a student, an AI Grader
+                for essays and assignment helps reduce workload and ensures fair
+                grading every time.
               </p>
             </div>
 
@@ -514,17 +548,17 @@ const EssayGrader = () => {
                   </div>
                   <span className="text-green-800 font-semibold">NoteGPT</span>
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-green-800 mb-4">
                   AI Grader
                 </h3>
-                
+
                 <p className="text-green-700 mb-4">
-                  AI Grader instantly grades your essay and papers in 3 seconds. Get precise 
-                  corrections and suggestions with our advanced text AI grader for fast 
-                  feedback and AI grader for teachers.
+                  AI Grader instantly grades your essay and papers in 3 seconds.
+                  Get precise corrections and suggestions with our advanced text
+                  AI grader for fast feedback and AI grader for teachers.
                 </p>
-                
+
                 <div className="flex items-center gap-2 text-green-600 text-sm">
                   <span>https://notegpt.io/</span>
                 </div>
@@ -574,7 +608,9 @@ const EssayGrader = () => {
                 {/* Strengths */}
                 {gradingResult.strengths.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-green-800 mb-2">Strengths</h4>
+                    <h4 className="font-semibold text-green-800 mb-2">
+                      Strengths
+                    </h4>
                     <ul className="space-y-1">
                       {gradingResult.strengths.map((strength, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -589,7 +625,9 @@ const EssayGrader = () => {
                 {/* Improvements */}
                 {gradingResult.improvements.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-orange-800 mb-2">Areas for Improvement</h4>
+                    <h4 className="font-semibold text-orange-800 mb-2">
+                      Areas for Improvement
+                    </h4>
                     <ul className="space-y-1">
                       {gradingResult.improvements.map((improvement, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -604,7 +642,9 @@ const EssayGrader = () => {
                 {/* Suggestions */}
                 {gradingResult.suggestions.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-blue-800 mb-2">Suggestions</h4>
+                    <h4 className="font-semibold text-blue-800 mb-2">
+                      Suggestions
+                    </h4>
                     <ul className="space-y-1">
                       {gradingResult.suggestions.map((suggestion, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -634,9 +674,9 @@ const EssayGrader = () => {
       )}
 
       {/* Billing Modal */}
-      <BillingModal 
-        isOpen={showBillingModal} 
-        onClose={() => setShowBillingModal(false)} 
+      <BillingModal
+        isOpen={showBillingModal}
+        onClose={() => setShowBillingModal(false)}
       />
     </div>
   );

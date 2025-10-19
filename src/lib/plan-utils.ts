@@ -11,7 +11,7 @@ export interface PlanInfo {
 
 export async function getUserPlan(userId: string): Promise<PlanInfo | null> {
   try {
-    const user = await (db as any).user.findUnique({
+    const user = await db.user.findUnique({
       where: { id: userId },
       include: {
         plans: {
@@ -22,7 +22,7 @@ export async function getUserPlan(userId: string): Promise<PlanInfo | null> {
       }
     });
 
-    if (!user || !user.plans.length) {
+    if (!user || !user.plans || user.plans.length === 0) {
       return null;
     }
 
@@ -30,7 +30,9 @@ export async function getUserPlan(userId: string): Promise<PlanInfo | null> {
     return {
       id: plan.id,
       name: plan.name,
-      isPremium: plan.name.toLowerCase().includes('pro') || plan.name.toLowerCase().includes('premium'),
+      isPremium:
+        plan.name.toLowerCase().includes("pro") ||
+        plan.name.toLowerCase().includes("premium"),
       numberOfFiles: plan.numberOfFiles,
       numberOfEssayWriter: plan.numberOfEssayWriter,
       numberOfEssayGrader: plan.numberOfEssayGrader,
@@ -43,11 +45,13 @@ export async function getUserPlan(userId: string): Promise<PlanInfo | null> {
 
 export function isPremiumPlan(planName: string): boolean {
   const name = planName.toLowerCase();
-  return name.includes('pro') || name.includes('premium') || name.includes('unlimited');
+  return (
+    name.includes("pro") ||
+    name.includes("premium") ||
+    name.includes("unlimited")
+  );
 }
 
 export function getProPlanId(): number {
-  // This should match the Pro plan ID from your admin panel
-  // You can adjust this based on your actual Pro plan ID
-  return 2; // Assuming Pro plan has ID 2, adjust as needed
+  return 2; // عدل على حسب الـ ID الحقيقي في قاعدة البيانات
 }

@@ -52,6 +52,7 @@ export async function deleteUserAction(userId: string) {
     return { success: false, message: "Failed to delete user" };
   }
 }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 export async function banUserAction(userId: string, reason: string) {
   try {

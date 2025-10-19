@@ -2,9 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export interface ActivityMetadata {
-  [key: string]: any;
-}
+// بديل آمن لـ any
+export type ActivityMetadata = Record<string, unknown>;
 
 export async function trackUserActivity(
   userId: string,
@@ -25,7 +24,10 @@ export async function trackUserActivity(
   }
 }
 
-export async function getUserActivitySummary(userId: string, days: number = 30) {
+export async function getUserActivitySummary(
+  userId: string,
+  days: number = 30
+) {
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - days);
 

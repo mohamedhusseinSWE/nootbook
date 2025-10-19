@@ -45,8 +45,9 @@ export default function DuplicateIPModal({
             </DialogTitle>
           </div>
           <DialogDescription className="text-gray-600 text-base">
-            We've detected that your IP address ({currentIP}) is being used by other accounts. 
-            This could indicate a security concern or shared network usage.
+            We&apos;ve detected that your IP address ({currentIP}) is being used
+            by other accounts. This could indicate a security concern or shared
+            network usage.
           </DialogDescription>
         </DialogHeader>
 
@@ -59,9 +60,16 @@ export default function DuplicateIPModal({
                   What does this mean?
                 </h4>
                 <ul className="text-sm text-yellow-700 space-y-1">
-                  <li>• Multiple accounts are accessing from the same IP address</li>
-                  <li>• This could be due to shared WiFi, office network, or VPN</li>
-                  <li>• If you don't recognize these accounts, please contact support</li>
+                  <li>
+                    • Multiple accounts are accessing from the same IP address
+                  </li>
+                  <li>
+                    • This could be due to shared WiFi, office network, or VPN
+                  </li>
+                  <li>
+                    • If you don&apos;t recognize these accounts, please contact
+                    support
+                  </li>
                   <li>• Consider using a unique network for better security</li>
                 </ul>
               </div>
@@ -96,7 +104,8 @@ export default function DuplicateIPModal({
                           </div>
                           <div className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
-                            Joined {format(new Date(account.createdAt), "MMM yyyy")}
+                            Joined{" "}
+                            {format(new Date(account.createdAt), "MMM yyyy")}
                           </div>
                         </div>
                       </div>
@@ -108,17 +117,16 @@ export default function DuplicateIPModal({
           )}
 
           <div className="flex justify-end gap-3 pt-4">
-            <Button
-              variant="outline"
-              onClick={onClose}
-              className="px-6"
-            >
+            <Button variant="outline" onClick={onClose} className="px-6">
               I Understand
             </Button>
             <Button
               onClick={() => {
                 // You can add a contact support action here
-                window.open("mailto:support@yourapp.com?subject=Duplicate IP Address Concern", "_blank");
+                window.open(
+                  "mailto:support@yourapp.com?subject=Duplicate IP Address Concern",
+                  "_blank"
+                );
                 onClose();
               }}
               className="px-6 bg-blue-600 hover:bg-blue-700"

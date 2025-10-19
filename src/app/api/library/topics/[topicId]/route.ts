@@ -18,7 +18,7 @@ export async function DELETE(
     const { topicId } = params;
 
     // First, delete all notes in this topic
-    await (db as any).libraryNote.deleteMany({
+    await db.libraryNote.deleteMany({
       where: {
         topicId: topicId,
         topic: {
@@ -28,16 +28,16 @@ export async function DELETE(
     });
 
     // Then delete the topic
-    await (db as any).libraryTopic.delete({
+    await db.libraryTopic.delete({
       where: {
         id: topicId,
         userId: sessionUser.user.id,
       },
     });
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Topic and all its notes deleted successfully" 
+    return NextResponse.json({
+      success: true,
+      message: "Topic and all its notes deleted successfully",
     });
   } catch (error) {
     console.error("Error deleting topic:", error);
@@ -72,7 +72,7 @@ export async function PUT(
       );
     }
 
-    const topic = await (db as any).libraryTopic.update({
+    const topic = await db.libraryTopic.update({
       where: {
         id: topicId,
         userId: sessionUser.user.id,

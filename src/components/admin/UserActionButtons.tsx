@@ -49,8 +49,6 @@ interface UserActionButtonsProps {
 export default function UserActionButtons({
   userId,
   userEmail,
-  userName,
-  subscriptionStatus,
   hasActiveSubscription,
   onUserDeleted,
   onUserUpdated,
@@ -72,7 +70,7 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to delete user");
       }
-    } catch (error) {
+    } catch (_) {
       toast.error("An error occurred while deleting user");
     } finally {
       setLoading(false);
@@ -96,7 +94,7 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to ban user");
       }
-    } catch (error) {
+    } catch (_) {
       toast.error("An error occurred while banning user");
     } finally {
       setLoading(false);
@@ -114,7 +112,7 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to cancel subscription");
       }
-    } catch (error) {
+    } catch (_) {
       toast.error("An error occurred while canceling subscription");
     } finally {
       setLoading(false);
@@ -141,7 +139,7 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to export emails");
       }
-    } catch (error) {
+    } catch (_) {
       toast.error("An error occurred while exporting emails");
     } finally {
       setLoading(false);

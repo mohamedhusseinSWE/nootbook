@@ -2,8 +2,27 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/getSession";
 import { db } from "@/db";
 
+// Type definitions
+interface UserWithPlan {
+  id: string;
+  plans: Array<{
+    id: number;
+    name: string;
+    numberOfEssayWriter: number;
+    numberOfEssayGrader: number;
+  }>;
+}
+
+interface EssayUsage {
+  id: number;
+  userId: string;
+  type: string;
+  fileId: string | null;
+  createdAt: Date;
+}
+
 // GET /api/essay-usage - Get user's essay usage statistics
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const sessionUser = await getSession();
     if (!sessionUser) {
@@ -14,7 +33,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user's current plan
-    const user = await (db as any).user.findUnique({
+    const user = await db.user.findUnique({
       where: { id: sessionUser.user.id },
       include: {
         plans: {
@@ -40,7 +59,7 @@ export async function GET(request: NextRequest) {
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
 
     const [essayWriterUsage, essayGraderUsage] = await Promise.all([
-      (db as any).essayUsage.count({
+      db.essayUsage.count({
         where: {
           userId: sessionUser.user.id,
           type: "essay_writer",
@@ -50,7 +69,7 @@ export async function GET(request: NextRequest) {
           }
         }
       }),
-      (db as any).essayUsage.count({
+      db.essayUsage.count({
         where: {
           userId: sessionUser.user.id,
           type: "essay_grader",
@@ -125,7 +144,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user has reached their limit
-    const user = await (db as any).user.findUnique({
+    const user = await db.user.findUnique({
       where: { id: sessionUser.user.id },
       include: {
         plans: {
@@ -162,7 +181,7 @@ export async function POST(request: NextRequest) {
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
       const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
 
-      const currentUsage = await (db as any).essayUsage.count({
+      const currentUsage = await db.essayUsage.count({
         where: {
           userId: sessionUser.user.id,
           type: type,
@@ -186,7 +205,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Record the usage
-    const usage = await (db as any).essayUsage.create({
+    const usage = await db.essayUsage.create({
       data: {
         userId: sessionUser.user.id,
         type: type,

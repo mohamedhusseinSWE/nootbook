@@ -5,6 +5,22 @@ import { revalidatePath } from "next/cache";
 import { getUserFromRequest } from "./auth";
 import { createPodcastSections } from "./audio-generation";
 
+
+type PlanDetails = {
+  planName: string;       // instead of name
+  subscriptionStatus: string;
+  numberOfFiles: number;
+  numberOfEssayWriter: number;
+  numberOfEssayGrader: number;
+};
+
+type Chunk = {
+  id: string;
+  fileId: string;
+  createdAt: Date;
+  text: string;
+};
+
 interface PodcastSectionInput {
   title: string;
   description: string;
@@ -170,7 +186,7 @@ export async function createAllContent(fileId: string) {
 export async function canUserCreatePodcast(userId: string): Promise<{
   canCreate: boolean;
   reason?: string;
-  planDetails?: any;
+  planDetails?: PlanDetails;
 }> {
   try {
     const user = await db.user.findUnique({
@@ -625,7 +641,7 @@ export async function createPodcast(fileId: string) {
       }
     } else {
       console.log("✅ Using chunks for content, count:", chunks.length);
-      fileContent = chunks.map((chunk: any) => chunk.text).join("\n\n");
+      fileContent = chunks.map((chunk: Chunk) => chunk.text).join("\n\n");
       console.log("🔍 Debug: Combined content length:", fileContent.length);
       console.log(
         "🔍 Debug: Content preview:",

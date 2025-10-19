@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAdminAuth } from "@/app/context/AdminAuthContext";
 
@@ -23,7 +22,6 @@ export function AdminHeader({ onMenuClick }: AdminHeaderProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { admin, logout, isLoading } = useAdminAuth();
-  const router = useRouter();
 
   // Close dropdown when clicking outside
   useEffect(() => {

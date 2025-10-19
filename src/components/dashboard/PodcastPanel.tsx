@@ -36,6 +36,20 @@ interface PodcastSection {
   generationMethod?: string | null;
 }
 
+interface Speaker {
+  id: string;
+  name: string;
+  role?: string; // optional, e.g., "host" or "guest"
+}
+
+interface VoiceSettings {
+  pitch?: number;
+  speed?: number;
+  voiceName?: string;
+  language?: string;
+}
+
+
 interface Podcast {
   id: string;
   title: string;
@@ -50,8 +64,8 @@ interface Podcast {
   isProcessed?: boolean;
   processingError?: string | null;
   generationMethod?: string | null;
-  speakers?: any;
-  voiceSettings?: any;
+  speakers?: Speaker[];           // <-- fixed
+  voiceSettings?: VoiceSettings;  // <-- fixed
 }
 
 const PodcastPanel: React.FC<PodcastPanelProps> = ({
