@@ -8,12 +8,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 // POST /api/admin/subscriptions/[subscriptionId]/cancel - Cancel subscription
-export async function POST(
-  request: Request,
-  { params }: { params: { subscriptionId: string } }
-) {
+export async function POST({
+  params,
+}: {
+  params: Promise<{ subscriptionId: string }>;
+}) {
   try {
-    const { subscriptionId } = params;
+    const { subscriptionId } = await params;
 
     // Get subscription from database
     const subscription = await prisma.subscription.findUnique({
@@ -64,15 +65,18 @@ export async function POST(
       data: {
         userId: subscription.userId,
         activity: "subscription_canceled",
-        metadata: JSON.stringify({ 
+        metadata: JSON.stringify({
           subscriptionId: subscription.id,
           planName: subscription.plan.name,
-          canceledBy: "admin"
+          canceledBy: "admin",
         }),
       },
     });
 
-    return NextResponse.json({ success: true, message: "Subscription cancelled successfully" });
+    return NextResponse.json({
+      success: true,
+      message: "Subscription cancelled successfully",
+    });
   } catch (error) {
     console.error("Failed to cancel subscription:", error);
     return NextResponse.json(
