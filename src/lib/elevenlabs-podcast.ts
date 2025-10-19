@@ -46,7 +46,7 @@ export class PodcastAudioGenerator {
     userId: string,
     options: {
       speakers?: DialogueSpeaker[];
-      voiceSettings?: any;
+      voiceSettings?: Record<string, unknown>;
       modelId?: string;
     } = {}
   ): Promise<{ audioUrl: string; duration: number; fileSize: number }> {
@@ -306,7 +306,7 @@ export class PodcastAudioGenerator {
             throw new Error('Dialogue generation failed');
           }
         }
-      } catch (error) {
+      } catch {
         console.log(`⏳ Polling attempt ${attempt + 1}/${maxAttempts}...`);
       }
     }

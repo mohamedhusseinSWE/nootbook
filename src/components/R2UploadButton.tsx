@@ -126,7 +126,6 @@ const R2UploadButton = ({
         setIsUploading(false);
         setUploadProgress(0);
         setSelectedFile(null);
-        setMultiFiles(null);
       }, 1500);
     } catch (err) {
       clearInterval(progressInterval);
@@ -226,9 +225,10 @@ const R2UploadButton = ({
           setTopicsError(msg);
           toast.error(msg);
         }
-      } catch (_) {
+      } catch (error) {
         setTopicsError("Failed to load topics");
         toast.error("Failed to load topics");
+        console.error(error)
       } finally {
         setTopicsLoading(false);
       }
