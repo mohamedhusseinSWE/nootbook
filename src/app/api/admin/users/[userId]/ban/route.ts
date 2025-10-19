@@ -6,10 +6,10 @@ const prisma = new PrismaClient();
 // POST /api/admin/users/[userId]/ban - Ban user
 export async function POST(
   request: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const { userId } = params;
+    const { userId } = await params;
     const { reason } = await request.json();
 
     // Check if user exists
