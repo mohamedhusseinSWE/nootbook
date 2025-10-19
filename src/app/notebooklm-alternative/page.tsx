@@ -285,7 +285,7 @@ const NotebookLMAlternative = () => {
               Better Value, Better Features
             </h2>
             <p className="text-lg text-gray-600">
-              Get more for less with NotebookLama's competitive pricing
+              Get more for less with NotebookLama&apos;s competitive pricing
             </p>
           </div>
 
@@ -346,8 +346,9 @@ const NotebookLMAlternative = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  &quot;NotebookLama&apos;s multi-format support was a game-changer. I can
-                  now work with all my document types in one place.&quot;
+                  &quot;NotebookLama&apos;s multi-format support was a
+                  game-changer. I can now work with all my document types in one
+                  place.&quot;
                 </p>
                 <div className="font-semibold">Dr. James Wilson</div>
                 <div className="text-sm text-gray-500">Research Scientist</div>
@@ -365,8 +366,9 @@ const NotebookLMAlternative = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  &quot;The AI conversations are much more accurate than NotebookLM.
-                  Plus, the pricing is unbeatable for the features offered.&quot;
+                  &quot;The AI conversations are much more accurate than
+                  NotebookLM. Plus, the pricing is unbeatable for the features
+                  offered.&quot;
                 </p>
                 <div className="font-semibold">Lisa Thompson</div>
                 <div className="text-sm text-gray-500">Content Manager</div>

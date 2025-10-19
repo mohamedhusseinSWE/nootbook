@@ -71,7 +71,7 @@ const EssayGrader = () => {
   const [usage, setUsage] = useState<UsageData | null>(null);
   const [plan, setPlan] = useState<Plan | null>(null);
   const [, setLoading] = useState(true);
-  const [fileId, setFileId] = useState<string | null>(null);
+  const [fileId,] = useState<string | null>(null);
   const [isFreeUser, setIsFreeUser] = useState(false);
   const [showBillingModal, setShowBillingModal] = useState(false);
 

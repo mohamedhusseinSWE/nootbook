@@ -70,8 +70,9 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to delete user");
       }
-    } catch (_) {
+    } catch (error) {
       toast.error("An error occurred while deleting user");
+      console.error("error deleting user", error);
     } finally {
       setLoading(false);
     }
@@ -94,8 +95,9 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to ban user");
       }
-    } catch (_) {
+    } catch (error) {
       toast.error("An error occurred while banning user");
+      console.error("error ban user", error);
     } finally {
       setLoading(false);
     }
@@ -112,8 +114,9 @@ export default function UserActionButtons({
       } else {
         toast.error(result.message || "Failed to cancel subscription");
       }
-    } catch (_) {
+    } catch (error) {
       toast.error("An error occurred while canceling subscription");
+      console.error("error cancel subs user", error);
     } finally {
       setLoading(false);
     }
@@ -134,13 +137,14 @@ export default function UserActionButtons({
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-        
+
         toast.success("User emails exported successfully");
       } else {
         toast.error(result.message || "Failed to export emails");
       }
-    } catch (_) {
+    } catch (error) {
       toast.error("An error occurred while exporting emails");
+      console.error("error export emails  user", error);
     } finally {
       setLoading(false);
     }
@@ -194,9 +198,10 @@ export default function UserActionButtons({
               Delete User
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete <strong>{userEmail}</strong>? 
-              This action will permanently remove the user and all their data, 
-              including files, messages, and subscription information. This cannot be undone.
+              Are you sure you want to delete <strong>{userEmail}</strong>? This
+              action will permanently remove the user and all their data,
+              including files, messages, and subscription information. This
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -221,8 +226,9 @@ export default function UserActionButtons({
               Ban User
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Ban <strong>{userEmail}</strong> from using the platform. 
-              Their subscription will be canceled and they will lose access to all features.
+              Ban <strong>{userEmail}</strong> from using the platform. Their
+              subscription will be canceled and they will lose access to all
+              features.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="space-y-2">
@@ -256,8 +262,9 @@ export default function UserActionButtons({
               Cancel Subscription
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Cancel the subscription for <strong>{userEmail}</strong>. 
-              This will immediately cancel their Stripe subscription and downgrade them to free plan.
+              Cancel the subscription for <strong>{userEmail}</strong>. This
+              will immediately cancel their Stripe subscription and downgrade
+              them to free plan.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
