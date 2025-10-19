@@ -6,10 +6,10 @@ const prisma = new PrismaClient();
 // GET /api/admin/users/[userId] - Get detailed user information
 export async function GET(
   request: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -89,10 +89,10 @@ export async function GET(
 // DELETE /api/admin/users/[userId] - Delete user
 export async function DELETE(
   request: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
     // Check if user exists
     const user = await prisma.user.findUnique({
