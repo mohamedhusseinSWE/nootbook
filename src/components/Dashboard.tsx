@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import {
   MessageSquare,
@@ -33,7 +33,6 @@ import Link from "next/link";
 import DuplicateIPModal from "./DuplicateIPModal";
 import { checkDuplicateIP } from "@/lib/actions/checkDuplicateIP";
 import { useSession } from "@/lib/auth-client";
-import { auth } from "@/lib/auth";
 import { trpc } from "@/app/_trpc/client";
 import BillingModal from "./BillingModal";
 import { toast } from "sonner";
@@ -117,7 +116,7 @@ const Dashboard = () => {
   const hasReachedFileLimit = fileLimit > 0 && files && files.length >= fileLimit;
 
   // API functions
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     try {
       const response = await fetch("/api/user/profile");
       const data = await response.json();
@@ -137,9 +136,9 @@ const Dashboard = () => {
     } finally {
       setSubLoading(false);
     }
-  };
+  }, [plans]);
 
-  const fetchPlans = async () => {
+  const fetchPlans = useCallback(async () => {
     setLoadingPlans(true);
     try {
       const res = await fetch("/api/admin/plans");
@@ -154,7 +153,7 @@ const Dashboard = () => {
     } finally {
       setLoadingPlans(false);
     }
-  };
+  }, []);
 
   // Use tRPC mutation for deleting files
   const deleteFileMutation = trpc.deleteFile.useMutation({

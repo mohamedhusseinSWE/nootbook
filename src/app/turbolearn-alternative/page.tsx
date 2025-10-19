@@ -223,8 +223,6 @@ const TurboLearnAlternative = () => {
                             <XCircle className="w-5 h-5 text-red-600 mx-auto" />
                           )}
                         </td>
-                        /* eslint-disable-next-line react/no-unescaped-entities
-                        */
                         <td className="px-6 py-4 text-center">
                           {item.turbolearn ? (
                             <CheckCircle className="w-5 h-5 text-green-600 mx-auto" />
@@ -288,8 +286,8 @@ const TurboLearnAlternative = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "Switched from TurboLearn and never looked back. The
-                  multi-format support and real-time chat are game-changers."
+                  &quot;Switched from TurboLearn and never looked back. The
+                  multi-format support and real-time chat are game-changers.&quot;
                 </p>
                 <div className="font-semibold">Michael Chen</div>
                 <div className="text-sm text-gray-500">Student</div>
@@ -307,9 +305,9 @@ const TurboLearnAlternative = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "The AI-powered conversations make document analysis so much
+                  &quot;The AI-powered conversations make document analysis so much
                   easier. Highly recommend for anyone working with PDFs
-                  regularly."
+                  regularly.&quot;
                 </p>
                 <div className="font-semibold">Emily Rodriguez</div>
                 <div className="text-sm text-gray-500">Content Creator</div>

@@ -2,24 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/getSession";
 import { db } from "@/db";
 
-// Type definitions
-interface UserWithPlan {
-  id: string;
-  plans: Array<{
-    id: number;
-    name: string;
-    numberOfEssayWriter: number;
-    numberOfEssayGrader: number;
-  }>;
-}
-
-interface EssayUsage {
-  id: number;
-  userId: string;
-  type: string;
-  fileId: string | null;
-  createdAt: Date;
-}
+// Type definitions removed as they were unused
 
 // GET /api/essay-usage - Get user's essay usage statistics
 export async function GET() {

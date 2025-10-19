@@ -203,6 +203,268 @@ const EssayGrader = () => {
     setEssayText(example);
   };
 
+  const handleDownloadPDF = async () => {
+    if (!gradingResult) return;
+    
+    try {
+      // Create a new window with the grading result content
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        toast.error("Please allow popups to download PDF");
+        return;
+      }
+      
+      const content = `
+        <h1>Essay Grading Report</h1>
+        <div style="margin-bottom: 20px;">
+          <h2>Overall Score: ${gradingResult.overallScore}/100</h2>
+          <p><strong>Grade:</strong> ${gradingResult.grade}</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <h3>Feedback</h3>
+          <p>${gradingResult.feedback}</p>
+        </div>
+        
+        ${gradingResult.strengths.length > 0 ? `
+        <div style="margin-bottom: 20px;">
+          <h3>Strengths</h3>
+          <ul>
+            ${gradingResult.strengths.map(strength => `<li>${strength}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+        
+        ${gradingResult.improvements.length > 0 ? `
+        <div style="margin-bottom: 20px;">
+          <h3>Areas for Improvement</h3>
+          <ul>
+            ${gradingResult.improvements.map(improvement => `<li>${improvement}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+        
+        ${gradingResult.suggestions.length > 0 ? `
+        <div style="margin-bottom: 20px;">
+          <h3>Suggestions</h3>
+          <ul>
+            ${gradingResult.suggestions.map(suggestion => `<li>${suggestion}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+      `;
+      
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Essay Grading Report</title>
+          <style>
+            body {
+              font-family: 'Times New Roman', serif;
+              line-height: 1.6;
+              margin: 40px;
+              color: #333;
+            }
+            h1 {
+              text-align: center;
+              margin-bottom: 30px;
+              color: #2c3e50;
+            }
+            h2, h3 {
+              color: #34495e;
+            }
+            ul {
+              margin-left: 20px;
+            }
+            @media print {
+              body { margin: 20px; }
+            }
+          </style>
+        </head>
+        <body>
+          ${content}
+        </body>
+        </html>
+      `);
+      
+      printWindow.document.close();
+      
+      // Wait for content to load then trigger print
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+      }, 500);
+      
+      toast.success("Grading report PDF download initiated!");
+    } catch (error) {
+      console.error("Failed to download PDF:", error);
+      toast.error("Failed to download PDF");
+    }
+  };
+
+  const handleDownloadTXT = async () => {
+    if (!gradingResult) return;
+    
+    try {
+      let content = `ESSAY GRADING REPORT\n`;
+      content += `========================\n\n`;
+      content += `Overall Score: ${gradingResult.overallScore}/100\n`;
+      content += `Grade: ${gradingResult.grade}\n\n`;
+      content += `FEEDBACK:\n${gradingResult.feedback}\n\n`;
+      
+      if (gradingResult.strengths.length > 0) {
+        content += `STRENGTHS:\n`;
+        gradingResult.strengths.forEach((strength, index) => {
+          content += `${index + 1}. ${strength}\n`;
+        });
+        content += `\n`;
+      }
+      
+      if (gradingResult.improvements.length > 0) {
+        content += `AREAS FOR IMPROVEMENT:\n`;
+        gradingResult.improvements.forEach((improvement, index) => {
+          content += `${index + 1}. ${improvement}\n`;
+        });
+        content += `\n`;
+      }
+      
+      if (gradingResult.suggestions.length > 0) {
+        content += `SUGGESTIONS:\n`;
+        gradingResult.suggestions.forEach((suggestion, index) => {
+          content += `${index + 1}. ${suggestion}\n`;
+        });
+        content += `\n`;
+      }
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `essay-grading-report-${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success("Grading report downloaded as TXT file!");
+    } catch (error) {
+      console.error("Failed to download TXT:", error);
+      toast.error("Failed to download TXT file");
+    }
+  };
+
+  const handleDownloadDOC = async () => {
+    if (!gradingResult) return;
+    
+    try {
+      const content = `
+        <h1>Essay Grading Report</h1>
+        <div style="margin-bottom: 20px;">
+          <h2>Overall Score: ${gradingResult.overallScore}/100</h2>
+          <p><strong>Grade:</strong> ${gradingResult.grade}</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <h3>Feedback</h3>
+          <p>${gradingResult.feedback}</p>
+        </div>
+        
+        ${gradingResult.strengths.length > 0 ? `
+        <div style="margin-bottom: 20px;">
+          <h3>Strengths</h3>
+          <ul>
+            ${gradingResult.strengths.map(strength => `<li>${strength}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+        
+        ${gradingResult.improvements.length > 0 ? `
+        <div style="margin-bottom: 20px;">
+          <h3>Areas for Improvement</h3>
+          <ul>
+            ${gradingResult.improvements.map(improvement => `<li>${improvement}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+        
+        ${gradingResult.suggestions.length > 0 ? `
+        <div style="margin-bottom: 20px;">
+          <h3>Suggestions</h3>
+          <ul>
+            ${gradingResult.suggestions.map(suggestion => `<li>${suggestion}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+      `;
+      
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Essay Grading Report</title>
+        </head>
+        <body style="font-family: 'Times New Roman', serif; line-height: 1.6;">
+          ${content}
+        </body>
+        </html>
+      `;
+      
+      const blob = new Blob([htmlContent], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `essay-grading-report-${new Date().toISOString().split('T')[0]}.doc`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success("Grading report downloaded as DOC file!");
+    } catch (error) {
+      console.error("Failed to download DOC:", error);
+      toast.error("Failed to download DOC file");
+    }
+  };
+
+  const handleCopyFeedback = async () => {
+    if (!gradingResult) return;
+    
+    try {
+      let content = `ESSAY GRADING REPORT\n`;
+      content += `Overall Score: ${gradingResult.overallScore}/100 (${gradingResult.grade})\n\n`;
+      content += `FEEDBACK:\n${gradingResult.feedback}\n\n`;
+      
+      if (gradingResult.strengths.length > 0) {
+        content += `STRENGTHS:\n`;
+        gradingResult.strengths.forEach((strength, index) => {
+          content += `${index + 1}. ${strength}\n`;
+        });
+        content += `\n`;
+      }
+      
+      if (gradingResult.improvements.length > 0) {
+        content += `AREAS FOR IMPROVEMENT:\n`;
+        gradingResult.improvements.forEach((improvement, index) => {
+          content += `${index + 1}. ${improvement}\n`;
+        });
+        content += `\n`;
+      }
+      
+      if (gradingResult.suggestions.length > 0) {
+        content += `SUGGESTIONS:\n`;
+        gradingResult.suggestions.forEach((suggestion, index) => {
+          content += `${index + 1}. ${suggestion}\n`;
+        });
+      }
+      
+      await navigator.clipboard.writeText(content);
+      toast.success("Grading feedback copied to clipboard!");
+    } catch (error) {
+      console.error("Failed to copy to clipboard:", error);
+      toast.error("Failed to copy to clipboard");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Section - White Background */}
@@ -657,12 +919,36 @@ const EssayGrader = () => {
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex gap-3 pt-4">
-                  <Button variant="outline" className="gap-2">
+                <div className="flex flex-wrap gap-3 pt-4">
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={handleDownloadPDF}
+                  >
                     <Download className="w-4 h-4" />
-                    Download Report
+                    Download PDF
                   </Button>
-                  <Button variant="outline" className="gap-2">
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={handleDownloadTXT}
+                  >
+                    <Download className="w-4 h-4" />
+                    Download TXT
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={handleDownloadDOC}
+                  >
+                    <Download className="w-4 h-4" />
+                    Download DOC
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="gap-2"
+                    onClick={handleCopyFeedback}
+                  >
                     <Clipboard className="w-4 h-4" />
                     Copy Feedback
                   </Button>

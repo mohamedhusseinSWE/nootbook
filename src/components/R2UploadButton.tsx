@@ -40,16 +40,13 @@ const R2UploadButton = ({
   const [topicsLoading, setTopicsLoading] = useState(false);
   const [topicsError, setTopicsError] = useState<string | null>(null);
   const [selectedTopicId, setSelectedTopicId] = useState<string>(topicId || "");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
   const [multiFiles, setMultiFiles] = useState<FileList | null>(null);
 
   const router = useRouter();
 
   const [fileKey, setFileKey] = useState<string>("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  const { data: fileData, refetch: pollFile } = trpc.getFile.useQuery(
+  const { data: fileData } = trpc.getFile.useQuery(
     { key: fileKey },
     {
       enabled: !!fileKey, // Only run when we have a key
@@ -231,7 +228,7 @@ const R2UploadButton = ({
           setTopicsError(msg);
           toast.error(msg);
         }
-      } catch (_) {
+      } catch {
         setTopicsError("Failed to load topics");
         toast.error("Failed to load topics");
       } finally {

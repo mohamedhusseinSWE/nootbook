@@ -2,36 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/getSession";
 import { db } from "@/db";
 
-// Type definitions
-interface LibraryNoteWithTopic {
-  id: string;
-  title: string;
-  content: string;
-  topicId: string;
-  topic: {
-    id: string;
-    name: string;
-  };
-  createdAt: Date;
-  updatedAt: Date;
-  tags: string[];
-}
-
-interface LibraryTopic {
-  id: string;
-  name: string;
-  userId: string;
-}
-
-interface LibraryNote {
-  id: string;
-  title: string;
-  content: string;
-  topicId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  tags: string[];
-}
+// Type definitions removed as they were unused
 
 // GET /api/library/notes - Get all notes for the user
 export async function GET() {
@@ -62,7 +33,7 @@ export async function GET() {
       },
     });
 
-    const notesWithTopic = notes.map((note: LibraryNoteWithTopic) => ({
+    const notesWithTopic = notes.map((note: any) => ({
       id: note.id,
       title: note.title,
       content: note.content,

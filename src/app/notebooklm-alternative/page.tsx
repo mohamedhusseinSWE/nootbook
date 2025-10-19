@@ -28,7 +28,7 @@ import FAQSection from "@/components/FAQSection";
 const NotebookLMAlternative = () => {
   const notebooklmFAQs = [
     {
-      question: "How does NotebookLama compare to Google's NotebookLM?",
+      question: "How does NotebookLama compare to Google&apos;s NotebookLM?",
       answer:
         "NotebookLama offers superior features including multi-format support (PDF, DOC, DOCX, MD, TXT), unlimited document storage, team collaboration, API access, and custom AI prompts. We provide better value with more affordable pricing and enhanced functionality.",
     },
@@ -40,7 +40,7 @@ const NotebookLMAlternative = () => {
     {
       question: "Is NotebookLama more expensive than NotebookLM?",
       answer:
-        "No, NotebookLama offers better value with our Pro plan at $9.99/month compared to NotebookLM's $19.99/month. We provide more features at a lower cost with better performance and capabilities.",
+        "No, NotebookLama offers better value with our Pro plan at $9.99/month compared to NotebookLM&apos;s $19.99/month. We provide more features at a lower cost with better performance and capabilities.",
     },
     {
       question: "Does NotebookLama have better AI than NotebookLM?",
@@ -285,7 +285,7 @@ const NotebookLMAlternative = () => {
               Better Value, Better Features
             </h2>
             <p className="text-lg text-gray-600">
-              Get more for less with NotebookLama's competitive pricing
+              Get more for less with NotebookLama&apos;s competitive pricing
             </p>
           </div>
 
@@ -346,7 +346,7 @@ const NotebookLMAlternative = () => {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  "NotebookLama's multi-format support was a game-changer. I can
+                  "NotebookLama&apos;s multi-format support was a game-changer. I can
                   now work with all my document types in one place."
                 </p>
                 <div className="font-semibold">Dr. James Wilson</div>
@@ -447,7 +447,7 @@ const NotebookLMAlternative = () => {
       <FAQSection
         faqs={notebooklmFAQs}
         title="NotebookLM Alternative FAQs"
-        description="Common questions about switching from Google's NotebookLM to NotebookLama"
+        description="Common questions about switching from Google&apos;s NotebookLM to NotebookLama"
       />
 
       {/* CTA Section */}

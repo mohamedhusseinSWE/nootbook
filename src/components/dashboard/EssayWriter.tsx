@@ -296,6 +296,63 @@ const EssayWriter = () => {
     }
   };
 
+  const handleDownloadTXT = async () => {
+    if (!generatedEssay) return;
+    
+    try {
+      const blob = new Blob([generatedEssay], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `essay-${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success("Essay downloaded as TXT file!");
+    } catch (error) {
+      console.error("Failed to download TXT:", error);
+      toast.error("Failed to download TXT file");
+    }
+  };
+
+  const handleDownloadDOC = async () => {
+    if (!generatedEssay) return;
+    
+    try {
+      // Create HTML content for Word document
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Generated Essay</title>
+        </head>
+        <body>
+          <h1>Generated Essay</h1>
+          <div style="white-space: pre-wrap; font-family: 'Times New Roman', serif; line-height: 1.6;">
+            ${generatedEssay}
+          </div>
+        </body>
+        </html>
+      `;
+      
+      const blob = new Blob([htmlContent], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `essay-${new Date().toISOString().split('T')[0]}.doc`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success("Essay downloaded as DOC file!");
+    } catch (error) {
+      console.error("Failed to download DOC:", error);
+      toast.error("Failed to download DOC file");
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-2">
@@ -631,7 +688,7 @@ const EssayWriter = () => {
                     {generatedEssay}
                   </pre>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button 
                     variant="outline" 
                     size="sm"
@@ -648,7 +705,25 @@ const EssayWriter = () => {
                     className="gap-2"
                   >
                     <Download className="w-4 h-4" />
-                    Download as PDF
+                    Download PDF
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={handleDownloadTXT}
+                    className="gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download TXT
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={handleDownloadDOC}
+                    className="gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download DOC
                   </Button>
                 </div>
               </div>
