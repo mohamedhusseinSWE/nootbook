@@ -154,7 +154,7 @@ export default function AudioPlayer({
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch(() => {
+      audio.play().catch((_) => {
         // Silent error handling - no console.error calls
         setError("Failed to play audio. Please try again.");
       });

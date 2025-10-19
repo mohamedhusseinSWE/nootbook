@@ -13,8 +13,8 @@ const openai = new OpenAI({
 // Type definitions for pdf-parse v2.4.3
 interface PDFInfo {
   numPages: number;
-  info?: Record<string, unknown>;
-  metadata?: Record<string, unknown>;
+  info?: any;
+  metadata?: any;
 }
 
 interface PDFImage {
@@ -24,7 +24,10 @@ interface PDFImage {
   format?: string;
 }
 
-// Removed unused interface
+interface PageTextResult {
+  text: string;
+  page: number;
+}
 
 interface ProcessOptions {
   extractImageText?: boolean;
@@ -37,14 +40,12 @@ interface ProcessOptions {
 async function getMetadata(pdfBuffer: Buffer): Promise<PDFInfo> {
   try {
     const pdfParse = await import("pdf-parse");
-    // Try different import patterns
-    const parseFunction = (pdfParse as any).default || pdfParse;
-    const data = await parseFunction(pdfBuffer);
+    const data = await (pdfParse as any)(pdfBuffer);
     
     return {
       numPages: data.numpages || 0,
-      info: data.info || {},
-      metadata: data.metadata || {},
+      info: data.info,
+      metadata: data.metadata,
     };
   } catch (error) {
     console.error("Error getting PDF metadata:", error);
@@ -61,12 +62,7 @@ async function extractTextByPage(
 ): Promise<string> {
   try {
     const pdfParse = await import("pdf-parse");
-    // Try different import patterns
-    const parseFunction = (pdfParse as any).default || pdfParse;
-    const data = await parseFunction(pdfBuffer);
-    
-    // pdf-parse doesn't support page-specific extraction
-    // Return all text for now
+    const data = await (pdfParse as any)(pdfBuffer, { page: pageNum });
     return data.text || "";
   } catch (error) {
     console.error(`Error extracting text from page ${pageNum}:`, error);
@@ -82,8 +78,12 @@ async function extractImagesFromPage(
   pageNum: number
 ): Promise<PDFImage[]> {
   try {
-    // pdf-parse doesn't support image extraction
-    // Return empty array for now
+    const pdfParse = await import("pdf-parse");
+    const data = await (pdfParse as any)(pdfBuffer, { page: pageNum });
+    
+    // pdf-parse doesn't directly support image extraction
+    // This is a placeholder for future implementation
+    // For now, return empty array
     return [];
   } catch (error) {
     console.error(`Error extracting images from page ${pageNum}:`, error);
@@ -100,7 +100,9 @@ async function getPageScreenshot(
 ): Promise<Buffer | null> {
   try {
     // pdf-parse doesn't support screenshot functionality
-    // Return null for now
+    // This would require a different library like pdf2pic or pdf-poppler
+    // For now, return null as a placeholder
+    console.log(`Screenshot functionality not available for page ${pageNum}`);
     return null;
   } catch (error) {
     console.error(`Error taking screenshot of page ${pageNum}:`, error);

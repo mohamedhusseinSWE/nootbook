@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/getSession";
 import { db } from "@/db";
 
-// Type definitions removed as they were unused
-
 // GET /api/library/notes - Get all notes for the user
 export async function GET() {
   try {
@@ -33,7 +31,7 @@ export async function GET() {
       },
     });
 
-    const notesWithTopic = notes.map((note: any) => ({
+    const notesWithTopic = notes.map((note) => ({
       id: note.id,
       title: note.title,
       content: note.content,

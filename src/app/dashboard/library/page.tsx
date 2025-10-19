@@ -74,18 +74,6 @@ const LibraryPage: React.FC = () => {
   const [newNoteTags, setNewNoteTags] = useState("");
   const [, setIsUploadingToTopic] = useState(false);
 
-  // Don't render if user is not authenticated
-  if (!session) {
-    return null;
-  }
-
-  useEffect(() => {
-    if (session && !sessionLoading) {
-      fetchTopics();
-      fetchNotes();
-    }
-  }, [session, sessionLoading]);
-
   const fetchTopics = async () => {
     try {
       const response = await fetch("/api/library/topics");
@@ -242,6 +230,18 @@ const LibraryPage: React.FC = () => {
       e.currentTarget.value = "";
     }
   };
+
+  useEffect(() => {
+    if (session && !sessionLoading) {
+      fetchTopics();
+      fetchNotes();
+    }
+  }, [session, sessionLoading]);
+
+  // Don't render if user is not authenticated
+  if (!session) {
+    return null;
+  }
 
   const filteredNotes = selectedTopic
     ? notes.filter((note) => note.topicId === selectedTopic)

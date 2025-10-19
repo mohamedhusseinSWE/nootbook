@@ -40,7 +40,6 @@ const R2UploadButton = ({
   const [topicsLoading, setTopicsLoading] = useState(false);
   const [topicsError, setTopicsError] = useState<string | null>(null);
   const [selectedTopicId, setSelectedTopicId] = useState<string>(topicId || "");
-  const [multiFiles, setMultiFiles] = useState<FileList | null>(null);
 
   const router = useRouter();
 
@@ -86,7 +85,6 @@ const R2UploadButton = ({
     const files = e.target.files;
     if (!files || files.length === 0 || isUploading) return;
 
-    setMultiFiles(files);
     if (files.length === 1) setSelectedFile(files[0]);
 
     setIsUploading(true);
@@ -228,7 +226,7 @@ const R2UploadButton = ({
           setTopicsError(msg);
           toast.error(msg);
         }
-      } catch {
+      } catch (_) {
         setTopicsError("Failed to load topics");
         toast.error("Failed to load topics");
       } finally {

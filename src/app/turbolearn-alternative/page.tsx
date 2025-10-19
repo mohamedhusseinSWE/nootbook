@@ -247,7 +247,6 @@ const TurboLearnAlternative = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               What Our Users Say
             </h2>
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
             <p className="text-lg text-gray-600">
               Join thousands of satisfied users who made the switch
             </p>
