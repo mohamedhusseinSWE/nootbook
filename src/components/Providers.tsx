@@ -18,7 +18,7 @@ const Providers = ({ children }: PropsWithChildren) => {
             return fetch(url, {
               ...options,
               credentials: "include", // <-- Ensure cookies are sent
-            });
+            } as RequestInit);
           },
         }),
       ],
