@@ -74,7 +74,7 @@ export async function GET(
     console.log("✅ Content-Type:", contentType);
 
     // Return the audio file with proper headers
-    const response = new NextResponse(audioBuffer, {
+    const response = new NextResponse(new Uint8Array(audioBuffer), {
       headers: {
         "Content-Type": contentType,
         "Content-Length": audioBuffer.length.toString(),
