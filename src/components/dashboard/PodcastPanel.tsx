@@ -60,12 +60,12 @@ interface Podcast {
   audioStorageKey?: string | null;
   audioFileSize?: number | null;
   audioFormat?: string | null;
-  autoDeleteAt?: string | null;
+  autoDeleteAt?: Date | null;
   isProcessed?: boolean;
   processingError?: string | null;
   generationMethod?: string | null;
-  speakers?: Speaker[];           // <-- fixed
-  voiceSettings?: VoiceSettings;  // <-- fixed
+  speakers?: any;                 // JsonValue from database
+  voiceSettings?: any;            // JsonValue from database
 }
 
 const PodcastPanel: React.FC<PodcastPanelProps> = ({
