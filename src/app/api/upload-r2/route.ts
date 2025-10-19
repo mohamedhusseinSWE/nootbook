@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "@/lib/auth-api";
 import { db } from "@/db";
 import { uploadToR2, generateFileKey } from "@/lib/r2-upload";
-import { processHybridPdf } from "@/lib/pdf-ocr-hybrid";
 import mammoth from "mammoth";
+import { processHybridPdf } from "@/lib/pdf-ocr-hybrid";
 
 // Helper: Chunk long text into segments
 function chunkText(text: string, maxWords = 500): string[] {
